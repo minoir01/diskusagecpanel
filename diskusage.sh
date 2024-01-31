@@ -16,6 +16,11 @@ function obtener_tamanos() {
     (cd "$path" && du -sch -- * | grep -v -e "cur" -e "new" -e "tmp" -e "mailboxes" -e "storage" | sort -hr)
 }
 
+function obtener_tamanos2() {
+    local path=$1
+    (cd "$path" && du -sch -- .[!.]* * | grep -v -e "cur" -e "new" -e "tmp" -e "mailboxes" -e "storage" | sort -hr)
+}
+
 # Revisar usuarios
 for user in /home/*
 do
@@ -30,7 +35,7 @@ do
 
         if [ -d /home/$user/public_html ]; then
             echo "Carpetas en /home/$user/public_html:"
-            obtener_tamanos "/home/$user/public_html"
+            obtener_tamanos2 "/home/$user/public_html"
             echo
         fi
 
