@@ -18,6 +18,10 @@ function obtener_tamanos() {
 
 function obtener_tamanos2() {
     local path=$1
+
+    # Se cambia du -sch * por du -sch .[!.]* * 
+    # Para abarcar carpetas y archivos ocultos
+    
     (cd "$path" && du -sch -- .[!.]* * | grep -v -e "cur" -e "new" -e "tmp" -e "mailboxes" -e "storage" | sort -hr)
 }
 
@@ -35,6 +39,7 @@ do
 
         if [ -d /home/$user/public_html ]; then
             echo "Carpetas en /home/$user/public_html:"
+            # Se incluyen archivos y carpetas ocultas
             obtener_tamanos2 "/home/$user/public_html"
             echo
         fi
